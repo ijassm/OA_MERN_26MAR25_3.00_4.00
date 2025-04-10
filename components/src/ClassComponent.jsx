@@ -10,7 +10,50 @@ export class ClassComponent extends Component {
         }
     }
 
+    // static getDerivedStateFromProps(props, state) {
+    //     console.log(props, "props");
+    //     console.log(state, "state");
+
+    //     return {
+    //         name: props.name,
+    //     }
+
+    //     // return null; // Return null to indicate no state change
+    // }
+
+    // shouldComponentUpdate() {
+    //     return false;
+    // }
+
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        console.log(prevProps, "prevProps");
+        console.log(prevState, "prevState");
+        return null;
+        // document.getElementById("div1").innerHTML =
+        //     "Before the update, the favorite was " + prevState.favoritecolor;
+    }
+
+
+    componentDidMount() {
+        console.log("componentDidMount called");
+
+        setTimeout(() => {
+            this.setState({ name: "REACT🤩" })
+        }, 1000)
+    }
+
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log("ComponentDidMount called");
+
+        console.log(prevProps, "prevProps");
+        console.log(prevState, "prevState\n");
+        console.log("-------------------------");
+    }
+
     handleChange = () => {
+        // ❌ Wrong way to change state
         // this.state.name = "Jane Doe";
         // this.state.age = 25;
         // this.state.location = "Los Angeles";
@@ -23,6 +66,7 @@ export class ClassComponent extends Component {
         console.log(this.state);
 
     }
+
 
 
     render() {

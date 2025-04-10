@@ -4,11 +4,11 @@ import './index.css'
 import App from './App.jsx'
 import { ClassComponent } from './ClassComponent.jsx'
 
-const data = "Hello React! - Props";
+const name = "Sanjai😎";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ClassComponent data={data} />
+    <ClassComponent name={name} />
     {/* {new ClassComponent(data).render()} */}
   </StrictMode>,
 )
