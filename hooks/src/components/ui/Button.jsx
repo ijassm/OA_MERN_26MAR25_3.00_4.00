@@ -6,6 +6,12 @@ import * as PropTypes from "prop-types";
 export function Button({ children, variant = "default", className, ...props }) {
     const baseStyles = "px-4 py-2 rounded font-semibold";
 
+    // console.log(children, "children");
+    // console.log(variant, "variant");
+    // console.log(className, "className");
+    // console.log(props, "props");
+
+
     const variantStyles = {
         filled: "bg-green-500 text-white",
         outlined: "border-2 border-black text-black bg-transparent",
@@ -16,6 +22,7 @@ export function Button({ children, variant = "default", className, ...props }) {
         <button
             {...props}
             className={clsx(baseStyles, variantStyles[variant], className)}
+        // className={baseStyles + " " + variantStyles[variant] + " " + className}
         >
             {children}
         </button>
