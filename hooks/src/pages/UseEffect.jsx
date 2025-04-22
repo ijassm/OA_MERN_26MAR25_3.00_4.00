@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, memo, useState } from "react";
 
 function Card({ title, userId, completed }) {
   return (
@@ -10,15 +10,45 @@ function Card({ title, userId, completed }) {
   );
 }
 
+function Loader({ loading }) {
+  if (loading) {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 text-gray-900">
+        <h1 className="my-4 text-6xl">Loading...</h1>
+      </main>
+    );
+  }
+}
+
+const CardList = memo(({ data }) => {
+  console.log("CardList Rendered");
+
+  return (
+    <section className="flex flex-wrap gap-4">
+      {data.map((item) => (
+        <Card key={item.id} {...item} />
+      ))}
+    </section>
+  );
+});
+
 export const UseEffect = () => {
   console.log("Component Rendered");
 
   const [name, setName] = useState("AK🧔");
   const [count, setCount] = useState(1);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const handleChange = () => {
     setName("🔴Red Dragon🐲");
+  };
+
+  const handleAddData = () => {
+    setData((prevData) => [
+      ...prevData,
+      { id: 465456, title: "New Item", userId: 4654654, completed: false },
+    ]);
   };
 
   useEffect(() => {
@@ -33,7 +63,12 @@ export const UseEffect = () => {
     console.log("useEffect 3 triggered");
     fetch("https://jsonplaceholder.typicode.com/todos")
       .then((response) => response.json())
-      .then((json) => setData(json))
+      .then((json) => {
+        setTimeout(() => {
+          setData(json);
+          setLoading(false);
+        }, 5000);
+      })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
@@ -53,14 +88,15 @@ export const UseEffect = () => {
       >
         Increment
       </button>
-
+      <button
+        className="py-2 px-4 border-2 border-amber-600 cursor-pointer my-4"
+        onClick={handleAddData}
+      >
+        Add Data
+      </button>
       <hr />
 
-      <section className="flex flex-wrap gap-4">
-        {data.map((item) => (
-          <Card key={item.id} {...item} />
-        ))}
-      </section>
+      {loading ? <Loader loading={loading} /> : <CardList data={data} />}
     </main>
   );
 };
