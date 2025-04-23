@@ -1,48 +1,23 @@
-import { useEffect, memo, useState } from "react";
-
-function Card({ title, userId, completed }) {
-  return (
-    <div className="border-2 border-amber-500 my-2 p-2">
-      <h1>UserId : {userId}</h1>
-      <h1>Title : {title}</h1>
-      <h1>Completed : {completed.toString()}</h1>
-    </div>
-  );
-}
-
-function Loader({ loading }) {
-  if (loading) {
-    return (
-      <main className="flex flex-col items-center justify-center p-4 bg-gray-100 text-gray-900">
-        <h1 className="my-4 text-6xl">Loading...</h1>
-      </main>
-    );
-  }
-}
-
-const CardList = memo(({ data }) => {
-  console.log("CardList Rendered");
-
-  return (
-    <section className="flex flex-wrap gap-4">
-      {data.map((item) => (
-        <Card key={item.id} {...item} />
-      ))}
-    </section>
-  );
-});
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { CardList, Loader } from "../components";
+import { useFetch } from "../customHooks";
 
 export const UseEffect = () => {
   console.log("Component Rendered");
 
   const [name, setName] = useState("AK🧔");
   const [count, setCount] = useState(1);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data, loading } = useFetch(
+    "https://jsonplaceholder.typicode.com/todos"
+  );
+  const completedTasks = useMemo(
+    () => data.filter((item) => item.completed === true),
+    [data]
+  );
 
-  const handleChange = () => {
+  const handleChange = useCallback(() => {
     setName("🔴Red Dragon🐲");
-  };
+  }, []); // Empty dependency array means this function doesn't change
 
   const handleAddData = () => {
     setData((prevData) => [
@@ -58,19 +33,6 @@ export const UseEffect = () => {
   useEffect(() => {
     console.log("useEffect 2 triggered", count);
   }, [count]); // This effect runs every time 'count' changes
-
-  useEffect(() => {
-    console.log("useEffect 3 triggered");
-    fetch("https://jsonplaceholder.typicode.com/todos")
-      .then((response) => response.json())
-      .then((json) => {
-        setTimeout(() => {
-          setData(json);
-          setLoading(false);
-        }, 5000);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 text-gray-900">
@@ -96,7 +58,11 @@ export const UseEffect = () => {
       </button>
       <hr />
 
-      {loading ? <Loader loading={loading} /> : <CardList data={data} />}
+      {loading ? (
+        <Loader loading={loading} />
+      ) : (
+        <CardList data={completedTasks} handleChange={handleChange} />
+      )}
     </main>
   );
 };
