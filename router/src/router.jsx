@@ -1,31 +1,33 @@
-import { createBrowserRouter, Link } from "react-router";
+import { createBrowserRouter, Link, Navigate } from "react-router";
+import { About, Contact, Home } from "./pages";
+import { VegCardList } from "./components/VegCardList";
+import { NonVegCardList } from "./components/NonVegCardList";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <>
-        <h1>Welcome to Home page</h1>
-        <Link to="/about">About</Link>
-      </>
-    ),
+    element: <Navigate to="/home" />,
   },
   {
     path: "/home",
-    element: (
-      <>
-        <h1>Welcome to Home page</h1>
-        <Link to="/about">About</Link>
-      </>
-    ),
+    Component: Home,
+    children: [
+      {
+        path: "vegetarian",
+        Component: VegCardList,
+      },
+      {
+        path: "nonVegetarian",
+        Component: NonVegCardList,
+      },
+    ],
   },
   {
     path: "/about",
-    element: (
-      <>
-        <h1>Welcome to About page</h1>
-        <Link to="/home">Home</Link>
-      </>
-    ),
+    element: About,
+  },
+  {
+    path: "/contact",
+    element: Contact,
   },
 ]);
