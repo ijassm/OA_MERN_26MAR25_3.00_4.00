@@ -1,5 +1,5 @@
 import { createBrowserRouter, Link, Navigate } from "react-router";
-import { About, Contact, Home } from "./pages";
+import { About, Contact, FoodView, Home } from "./pages";
 import { VegCardList } from "./components/VegCardList";
 import { NonVegCardList } from "./components/NonVegCardList";
 
@@ -21,6 +21,10 @@ export const router = createBrowserRouter([
         Component: NonVegCardList,
       },
     ],
+  },
+  {
+    path: "/home/vegetarian/:id",
+    Component: FoodView,
   },
   {
     path: "/about",

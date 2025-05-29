@@ -1,7 +1,7 @@
 import React from "react";
-import { Link, NavLink, Outlet } from "react-router";
+import {  NavLink, Outlet } from "react-router";
 import { ImLeaf } from "react-icons/im";
-import { GiChickenOven, GiGoat, GiRoastChicken } from "react-icons/gi";
+import { GiRoastChicken } from "react-icons/gi";
 
 export const Home = () => {
   return (
