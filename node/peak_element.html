@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const arr = [9, 17, 4, 5, 12, 85, 3];
+
+      function peakElement(arr) {
+        let peak = arr[0];
+        let peakIndex;
+        for (let i = 0; i < arr.length - 1; i++) {
+          console.log(peak, "peak");
+          if (peak < arr[i]) {
+            peak = arr[i];
+            peakIndex = i;
+          }
+        }
+        console.log(peak, "peak");
+        console.log(peakIndex, "peakIndex");
+      }
+
+      peakElement(arr);
+    </script>
+  </body>
+</html>
