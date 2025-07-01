@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const app = express();
+const todoRoute = require("./src/routes/todo.route");
 const PORT = 5000;
 
 app.use(express.json());
@@ -41,9 +42,13 @@ app.use(async (_, res, next) => {
 });
 
 
+app.use("/api/todo", todoRoute);
+
+
 app.get("/", (_, res) => {
     res.send("Welcome to TODO backend");
 });
+
 
 
 app.listen(PORT, () => {

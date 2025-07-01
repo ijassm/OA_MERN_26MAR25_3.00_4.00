@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const schema = new mongoose.Schema({
     title: String,
     isCompleted: Boolean,
-    default: false,
-});
+}, { timestamps: { createdAt: true, updatedAt: false } });
 
 const TodoModel = mongoose.model("todo", schema);
 
