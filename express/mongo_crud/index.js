@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const { default: mongoose } = require("mongoose");
 const app = express();
-const todoRoute = require("./src/routes/todo.route");
+const routes = require("./src/routes");
 const PORT = 5000;
 
 app.use(express.json());
@@ -42,7 +42,7 @@ app.use(async (_, res, next) => {
 });
 
 
-app.use("/api/todo", todoRoute);
+app.use("/api", routes);
 
 
 app.get("/", (_, res) => {

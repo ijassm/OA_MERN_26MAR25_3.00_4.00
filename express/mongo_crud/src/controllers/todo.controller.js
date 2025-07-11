@@ -19,7 +19,6 @@ const getTodos = async (_, res) => {
     }
 };
 
-
 const createTodo = async (req, res) => {
     try {
         const { title, isCompleted } = req.body;
@@ -77,7 +76,6 @@ const updateTodo = async (req, res) => {
             .json({ success: false, message: "Internal server error" });
     }
 };
-
 
 const deleteTodo = async (req, res) => {
     try {
